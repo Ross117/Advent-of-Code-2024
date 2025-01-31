@@ -1,14 +1,13 @@
+from collections import Counter
+
 with open('input.txt') as file:
     input = file.read().split('\n')
 
 left_list: list[int] = sorted([int(val.split('   ')[0]) for val in input])
 right_list: list[int] = sorted([int(val.split('   ')[1]) for val in input])
 
-similarity_score: int = 0
+right_list_count = Counter(right_list)
 
-for i in range(len(left_list)):
-    similarity_score += left_list[i] * right_list.count(left_list[i])
-
-answer = similarity_score
+answer = sum(x * right_list_count[x] for x in left_list)
 
 print(answer)

@@ -2,7 +2,7 @@ with open('input.txt') as file:
     input = file.read()
 
 map: list[list[str]] = [list(val) for val in input.split('\n')]
-frequencies: set[str] = set([char for char in input if char != '.' and char != '\n'])
+frequencies: set[str] = set(char for char in input if char not in ('.', '\n'))
 
 # the same antenna can be part of more than one pair
 
@@ -25,38 +25,41 @@ def find_same_freq_antennas(frequency: str) -> list[list[int]]:
     return indexes
 
 def find_antinodes(index_a: list[int], index_b: list[int]) -> list[list[int]]:
-    '''Given a pair indexes which represent antennas of the same frequency,
+    '''Given a pair of indexes which represent antennas of the same frequency,
     find the corresponding pair of antinodes. If the antinodes are located
     within the bounds of the map, return their indexes.'''
 
     antinodes: list[list[int]] = []
+    
+    x1, y1 = index_a
+    x2, y2 = index_b
 
-    row_diff: int = abs(index_a[0] - index_b[0])
-    col_diff: int = abs(index_a[1] - index_b[1])
+    row_diff: int = abs(x1 - x2)
+    col_diff: int = abs(y1 - y2)
 
     antinode_a = [0, 0]
     antinode_b = [0, 0]
 
     # work out how to apply the offsets - refactor!!
-    if index_a[0] < index_b[0]:
-        antinode_a[0] = index_a[0] - row_diff
-        antinode_b[0] = index_b[0] + row_diff
-    elif index_a[0] > index_b[0]:
-        antinode_a[0] = index_a[0] + row_diff
-        antinode_b[0] = index_b[0] - row_diff
+    if x1 < x2:
+        antinode_a[0] = x1 - row_diff
+        antinode_b[0] = x2 + row_diff
+    elif x1 > x2:
+        antinode_a[0] = x1 + row_diff
+        antinode_b[0] = x2 - row_diff
     else:
-        antinode_a[0] = index_a[0] - row_diff
-        antinode_b[0] = index_b[0] + row_diff
+        antinode_a[0] = x1 - row_diff
+        antinode_b[0] = x2 + row_diff
 
-    if index_a[1] < index_b[1]:
-        antinode_a[1] = index_a[1] - col_diff
-        antinode_b[1] = index_b[1] + col_diff
-    elif index_a[1] > index_b[1]:
-        antinode_a[1] = index_a[1] + col_diff
-        antinode_b[1] = index_b[1] - col_diff
+    if y1 < y2:
+        antinode_a[1] = y1 - col_diff
+        antinode_b[1] = y2 + col_diff
+    elif y1 > y2:
+        antinode_a[1] = y1 + col_diff
+        antinode_b[1] = y2 - col_diff
     else:
-        antinode_a[1] = index_a[1] - col_diff
-        antinode_b[1] = index_b[1] + col_diff
+        antinode_a[1] = y1 - col_diff
+        antinode_b[1] = y2 + col_diff
 
     antinodes.extend([antinode_a, antinode_b])
 

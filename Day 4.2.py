@@ -21,25 +21,24 @@ def found_x_mas(line_ind: int, char_ind: int) -> bool:
             if input[line_ind - offset[0][0]][char_ind - offset[0][1]] \
                 + input[line_ind][char_ind] \
                 + input[line_ind - offset[1][0]][char_ind - offset[1][1]]  == 'MAS':
-                
+
                 # need to discard any matches found through using negative indexes
-                check_for_negative_indexes: list[int] = list(filter(lambda x: x < 0, [line_ind, 
+                if not list(filter(lambda x: x < 0, [line_ind,
                     char_ind,
                     line_ind - offset[0][0],
                     char_ind - offset[0][1],
                     line_ind - offset[1][0],
                     char_ind - offset[1][1]
-                    ]))
-                
-                if len(check_for_negative_indexes) == 0:
-                        x_mas += 1
+                ])):
+                    x_mas += 1
         except IndexError:
             continue
 
     if x_mas == 2:
         return True
-    else:
-        return False
+
+    return False
+
 
 matches: int = 0
 

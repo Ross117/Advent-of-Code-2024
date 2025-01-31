@@ -26,9 +26,9 @@ def xmas_matches(line_ind: int, char_ind: int) -> int:
             if input[line_ind - offset[0][0]][char_ind - offset[0][1]] \
                 + input[line_ind - offset[1][0]][char_ind - offset[1][1]] \
                 + input[line_ind - offset[2][0]][char_ind - offset[2][1]]  == 'MAS':
-                
-                # need to discard any matches found through using negative indexes
-                check_for_negative_indexes: list[int] = list(filter(lambda x: x < 0, [line_ind, 
+
+                if not list(filter(lambda x: x < 0, [
+                    line_ind,
                     char_ind,
                     line_ind - offset[0][0],
                     char_ind - offset[0][1],
@@ -36,10 +36,8 @@ def xmas_matches(line_ind: int, char_ind: int) -> int:
                     char_ind - offset[1][1],
                     line_ind - offset[2][0],
                     char_ind - offset[2][1]
-                    ]))
-                
-                if len(check_for_negative_indexes) == 0:
-                        xmas += 1
+                ])):
+                    xmas += 1
         except IndexError:
             continue
 

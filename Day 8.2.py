@@ -2,7 +2,7 @@ with open('input.txt') as file:
     input = file.read()
 
 map: list[list[str]] = [list(val) for val in input.split('\n')]
-frequencies: set[str] = set([char for char in input if char != '.' and char != '\n'])
+frequencies: set[str] = set(char for char in input if char not in ('.', '\n'))
 
 # the same antenna can be part of more than one pair
 # the antinodes occur when one of the antennas is twice as far away as the other

@@ -4,11 +4,6 @@ with open('input.txt') as file:
 left_list: list[int] = sorted([int(val.split('   ')[0]) for val in input])
 right_list: list[int] = sorted([int(val.split('   ')[1]) for val in input])
 
-distance: int = 0
-
-for i in range(len(left_list)):
-    distance += abs(left_list[i] - right_list[i])
-
-answer: int = distance
+answer: int = sum(abs(x - y) for x, y in zip(left_list, right_list))
 
 print(answer)

@@ -1,3 +1,5 @@
+from itertools import pairwise
+
 with open('input.txt') as file:
     input = file.read().split('\n')
 
@@ -11,11 +13,8 @@ def safe(report) -> bool | None:
     Otherwise, return false'''
 
     if report == sorted(report) or report == sorted(report, reverse=True):
-    
-        for ind, level in enumerate(report):
-            if ind == len(report) - 1:
-                break
-            if abs(level - report[ind + 1]) > 3 or level == report[ind + 1]:
+        for x, y in pairwise(report):
+            if abs(x - y) > 3 or x == y:
                 return False
         return True
 

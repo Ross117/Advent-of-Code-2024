@@ -1,3 +1,5 @@
+from itertools import pairwise
+
 with open('input.txt') as file:
     input = file.read().split('\n')
 
@@ -11,18 +13,11 @@ def safe(report) -> int:
     Otherwise, return false'''
 
     # check if the values in the report are either ascending or descending
-    if report == sorted(report) or report == sorted(report, reverse=True):
-    
-        for ind, level in enumerate(report):
-            if ind == len(report) - 1:
-                break
-            if abs(level - report[ind + 1]) > 3 or level == report[ind + 1]:
-                return 0
+    if (report == sorted(report) or report == sorted(report, reverse=True)) \
+        and all(1 <= abs(x - y) <= 3 for x, y in pairwise(report)):
         return 1
-    
-    else:
-        return 0
-
+   
+    return 0
 
 safe_reports: int = sum(safe(report) for report in input_lists)
 answer = safe_reports
